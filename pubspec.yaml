@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.5.1
   freezed: ^2.4.7
   flutter_svg: ^2.0.10+1
+  vector_math: ^2.1.4
 
 dev_dependencies:
   flutter_test:

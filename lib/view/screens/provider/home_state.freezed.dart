@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeState {
+  int? get dragTarget => throw _privateConstructorUsedError;
   List<Offset> get previousActions => throw _privateConstructorUsedError;
   bool get closed => throw _privateConstructorUsedError;
   List<Offset> get coordinates => throw _privateConstructorUsedError;
@@ -31,7 +32,10 @@ abstract class $HomeStateCopyWith<$Res> {
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call(
-      {List<Offset> previousActions, bool closed, List<Offset> coordinates});
+      {int? dragTarget,
+      List<Offset> previousActions,
+      bool closed,
+      List<Offset> coordinates});
 }
 
 /// @nodoc
@@ -47,11 +51,16 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? dragTarget = freezed,
     Object? previousActions = null,
     Object? closed = null,
     Object? coordinates = null,
   }) {
     return _then(_value.copyWith(
+      dragTarget: freezed == dragTarget
+          ? _value.dragTarget
+          : dragTarget // ignore: cast_nullable_to_non_nullable
+              as int?,
       previousActions: null == previousActions
           ? _value.previousActions
           : previousActions // ignore: cast_nullable_to_non_nullable
@@ -77,7 +86,10 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Offset> previousActions, bool closed, List<Offset> coordinates});
+      {int? dragTarget,
+      List<Offset> previousActions,
+      bool closed,
+      List<Offset> coordinates});
 }
 
 /// @nodoc
@@ -91,11 +103,16 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? dragTarget = freezed,
     Object? previousActions = null,
     Object? closed = null,
     Object? coordinates = null,
   }) {
     return _then(_$HomeStateImpl(
+      dragTarget: freezed == dragTarget
+          ? _value.dragTarget
+          : dragTarget // ignore: cast_nullable_to_non_nullable
+              as int?,
       previousActions: null == previousActions
           ? _value._previousActions
           : previousActions // ignore: cast_nullable_to_non_nullable
@@ -116,13 +133,17 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl extends _HomeState {
   _$HomeStateImpl(
-      {final List<Offset> previousActions = const [],
+      {this.dragTarget = null,
+      final List<Offset> previousActions = const [],
       this.closed = false,
       final List<Offset> coordinates = const []})
       : _previousActions = previousActions,
         _coordinates = coordinates,
         super._();
 
+  @override
+  @JsonKey()
+  final int? dragTarget;
   final List<Offset> _previousActions;
   @override
   @JsonKey()
@@ -146,7 +167,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(previousActions: $previousActions, closed: $closed, coordinates: $coordinates)';
+    return 'HomeState(dragTarget: $dragTarget, previousActions: $previousActions, closed: $closed, coordinates: $coordinates)';
   }
 
   @override
@@ -154,6 +175,8 @@ class _$HomeStateImpl extends _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
+            (identical(other.dragTarget, dragTarget) ||
+                other.dragTarget == dragTarget) &&
             const DeepCollectionEquality()
                 .equals(other._previousActions, _previousActions) &&
             (identical(other.closed, closed) || other.closed == closed) &&
@@ -164,6 +187,7 @@ class _$HomeStateImpl extends _HomeState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      dragTarget,
       const DeepCollectionEquality().hash(_previousActions),
       closed,
       const DeepCollectionEquality().hash(_coordinates));
@@ -177,11 +201,14 @@ class _$HomeStateImpl extends _HomeState {
 
 abstract class _HomeState extends HomeState {
   factory _HomeState(
-      {final List<Offset> previousActions,
+      {final int? dragTarget,
+      final List<Offset> previousActions,
       final bool closed,
       final List<Offset> coordinates}) = _$HomeStateImpl;
   _HomeState._() : super._();
 
+  @override
+  int? get dragTarget;
   @override
   List<Offset> get previousActions;
   @override

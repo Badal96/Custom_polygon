@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class DrawShape extends StatelessWidget {
@@ -51,24 +53,27 @@ class CustomRect extends CustomPainter {
     if (coordinates.isNotEmpty) {
       path.moveTo(coordinates[0].dx, coordinates[0].dy);
     }
+
     for (var i = 0; i < coordinates.length; i++) {
       path.lineTo(coordinates[i].dx, coordinates[i].dy);
-
-      if (i + 1 < coordinates.length) {
-        canvas.drawLine(
-            coordinates[i], coordinates[i + 1], paint..color = Colors.black);
-      }
     }
     if (closed && coordinates.length > 2) {
       path.close();
 
-      canvas.drawLine(
-          coordinates.first, coordinates.last, paint..color = Colors.black);
       canvas.drawPath(
           path,
           paint
             ..color = Colors.white
             ..style = PaintingStyle.fill);
+      canvas.drawLine(
+          coordinates.first, coordinates.last, paint..color = Colors.black);
+    }
+
+    for (var i = 0; i < coordinates.length; i++) {
+      if (i + 1 < coordinates.length) {
+        canvas.drawLine(
+            coordinates[i], coordinates[i + 1], paint..color = Colors.black);
+      }
     }
   }
 

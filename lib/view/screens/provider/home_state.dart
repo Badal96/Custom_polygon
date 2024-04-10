@@ -9,6 +9,7 @@ class HomeState with _$HomeState {
   const HomeState._();
 
   factory HomeState({
+    @Default(null) int? dragTarget,
     @Default([]) List<Offset> previousActions,
     @Default(false) bool closed,
     @Default([]) List<Offset> coordinates,

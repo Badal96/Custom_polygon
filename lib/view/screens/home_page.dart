@@ -6,6 +6,7 @@ import 'package:sobol_task/config/colors.dart';
 import 'package:sobol_task/view/screens/provider/home_provider.dart';
 import 'package:sobol_task/view/widgets/custom_paint.dart';
 import 'package:sobol_task/view/widgets/indicator.dart';
+import 'package:sobol_task/view/widgets/line_length.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -18,7 +19,7 @@ class HomePage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 13,
+        toolbarHeight: 14,
       ),
       body: Stack(
         children: [
@@ -33,7 +34,9 @@ class HomePage extends ConsumerWidget {
               ref.read(homeProvider.notifier).changeOffset(
                   details.localPosition, homeState.coordinates.length - 1);
             },
-            onPanEnd: (details) {},
+            onPanEnd: (details) {
+              ref.read(homeProvider.notifier).hideDragTarget();
+            },
             child: Container(
               decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -118,21 +121,17 @@ class HomePage extends ConsumerWidget {
           ),
           ...homeState.coordinates.map(
             (e) => Indicator(
-                closed: homeState.closed,
-                onDrag: (details) {
-                  if (!homeState.closed) {
-                    return;
-                  }
-                  ref.read(homeProvider.notifier).changeOffset(
-                      Offset(
-                          details.globalPosition.dx,
-                          details.globalPosition.dy -
-                              13 -
-                              MediaQuery.of(context).padding.top),
-                      homeState.coordinates.indexOf(e));
-                },
-                offset: e),
+              topPadding:
+                  MediaQuery.of(context).padding.top - 14, // 14 is appBar size
+              index: homeState.coordinates.indexOf(e),
+            ),
           ),
+          if (homeState.coordinates.length > 2 && homeState.closed)
+            ...ref.read(homeProvider.notifier).coordinatesLength().map((e) =>
+                LineLength(
+                    length: e['mainVectorLength'],
+                    rotation: e['angle'],
+                    position: e['position']))
         ],
       ),
     );
