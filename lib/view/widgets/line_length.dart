@@ -16,8 +16,8 @@ class LineLength extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: position.dy,
-      left: position.dx - 20,
+      top: position.dy - 10,
+      left: position.dx - 25,
       child: Transform.rotate(
         angle: rotation * (pi / 180),
         child: Text(
