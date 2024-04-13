@@ -9,48 +9,41 @@ final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
 class HomeNotifier extends StateNotifier<HomeState> {
   HomeNotifier(super.state);
 
-//    bool doSegmentsIntersect(Offset p1, Offset p2, Offset q1, Offset q2) {
-//   int o1 = orientation(p1, p2, q1);
-//   int o2 = orientation(p1, p2, q2);
-//   int o3 = orientation(q1, q2, p1);
-//   int o4 = orientation(q1, q2, p2);
+  double determinant(Offset p1, Offset p2) {
+    return p1.dx * p2.dy - p2.dx * p1.dy;
+  }
 
-//   if (o1 != o2 && o3 != o4) return true;
+  bool doLinesIntersect(
+      Offset line1Start, Offset line1End, Offset line2Start, Offset line2End) {
+    double det1 = determinant(line2Start - line1Start, line1End - line1Start);
+    double det2 = determinant(line2End - line1Start, line1End - line1Start);
+    double det3 = determinant(line1Start - line2Start, line2End - line2Start);
+    double det4 = determinant(line1End - line2Start, line2End - line2Start);
 
-//   if (o1 == 0 && onSegment(p1, q1, p2)) return true;
-//   if (o2 == 0 && onSegment(p1, q2, p2)) return true;
-//   if (o3 == 0 && onSegment(q1, p1, q2)) return true;
-//   if (o4 == 0 && onSegment(q1, p2, q2)) return true;
+    if ((det1 * det2 < 0) && (det3 * det4 < 0)) {
+      return true;
+    }
 
-//   return false;
-// }
+    return false;
+  }
 
-// int orientation(Offset p, Offset q, Offset r) {
-//   double val = (q.dy - p.dy) * (r.dx - q.dx) - (q.dx - p.dx) * (r.dy - q.dy);
-//   if (val.abs() < 1e-9) return 0;
-//   return (val > 0) ? 1 : 2;
-// }
-
-// bool onSegment(Offset p, Offset q, Offset r) {
-//   if (q.dx <= max(p.dx, r.dx) && q.dx >= min(p.dx, r.dx) &&
-//       q.dy <= max(p.dy, r.dy) && q.dy >= min(p.dy, r.dy)) {
-//     return true;
-//   }
-//   return false;
-// }
-
-// bool doAnySegmentsIntersect(List<Offset> points) {
-//   int n = points.length;
-//   for (int i = 0; i < n - 1; i++) {
-//     for (int j = i + 1; j < n; j++) {
-//       if (j == n - 1 && i == 0) continue;
-//       if (doSegmentsIntersect(points[i], points[(i + 1) % n], points[j], points[(j + 1) % n])) {
-//         return true;
-//       }
-//     }
-//   }
-//   return false;
-// }
+  bool doAnyLineIntersect(List<Offset> coordinates) {
+    for (var i = 0; i < coordinates.length; i++) {
+      for (var j = i + 1; j < coordinates.length - 1; j++) {
+        if (doLinesIntersect(coordinates[i], coordinates[i + 1], coordinates[j],
+            coordinates[j + 1])) {
+          return false;
+        }
+      }
+    }
+    for (var i = 0; i < coordinates.length - 1; i++) {
+      if (doLinesIntersect(coordinates.last, coordinates.first, coordinates[i],
+          coordinates[i + 1])) {
+        return false;
+      }
+    }
+    return true;
+  }
 
   List<Map<String, dynamic>> coordinatesLength() {
     List<Map<String, dynamic>> res = [];
@@ -70,6 +63,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     double mainVectorLength = sqrt(dx * dx + dy * dy);
 
     double angle = atan2(dy, dx);
+
     angle = angle * 180 / pi;
 
     double offsetX = (offset1.dx + offset2.dx) / 2;
@@ -123,18 +117,22 @@ class HomeNotifier extends StateNotifier<HomeState> {
 
     List<Offset> changedList = List.from(state.coordinates);
     changedList[index] = offset;
-    state = state.copyWith(coordinates: changedList);
+    if (doAnyLineIntersect(changedList)) {
+      state = state.copyWith(coordinates: changedList);
+    } else {
+      return;
+    }
   }
 
   void addOffset(Offset offset) {
     if (state.closed) {
       return;
     }
-
-    state = state.copyWith(
-        previousActions: [],
-        coordinates: List.from([...state.coordinates, offset]));
-
+    if (doAnyLineIntersect([...state.coordinates, offset])) {
+      state = state.copyWith(
+          previousActions: [],
+          coordinates: List.from([...state.coordinates, offset]));
+    }
     state = state.copyWith(
         dragTarget: state.coordinates.length - 1,
         coordinates: List.from(state.coordinates));
