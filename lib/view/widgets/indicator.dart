@@ -27,6 +27,11 @@ class Indicator extends ConsumerWidget {
       top: homeState.coordinates[index].dy - widgetAlignment,
       left: homeState.coordinates[index].dx - widgetAlignment,
       child: GestureDetector(
+        onPanStart: (details) {
+          if (homeState.closed) {
+            ref.read(homeProvider.notifier).setDragTarget(index);
+          }
+        },
         onPanUpdate: (details) {
           if (!homeState.closed) {
             return;
