@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:sobol_task/config/assets.dart';
-import 'package:sobol_task/config/colors.dart';
-import 'package:sobol_task/view/screens/provider/home_provider.dart';
+import 'package:custom_polygon/config/assets.dart';
+import 'package:custom_polygon/config/colors.dart';
+import 'package:custom_polygon/view/screens/provider/home_provider.dart';
 
 class Indicator extends ConsumerWidget {
   final int index;

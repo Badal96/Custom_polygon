@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "sobol_task" "\0"
+            VALUE "FileDescription", "custom_polygon" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "sobol_task" "\0"
+            VALUE "InternalName", "custom_polygon" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "sobol_task.exe" "\0"
-            VALUE "ProductName", "sobol_task" "\0"
+            VALUE "OriginalFilename", "custom_polygon.exe" "\0"
+            VALUE "ProductName", "custom_polygon" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

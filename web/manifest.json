@@ -1,6 +1,6 @@
 {
-    "name": "sobol_task",
-    "short_name": "sobol_task",
+    "name": "custom_polygon",
+    "short_name": "custom_polygon",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sobol_task/config/colors.dart';
+import 'package:custom_polygon/config/colors.dart';
 
 class LineLength extends StatelessWidget {
   final double length;

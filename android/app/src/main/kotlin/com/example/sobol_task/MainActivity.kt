@@ -1,4 +1,4 @@
-package com.example.sobol_task
+package com.example.custom_polygon
 
 import io.flutter.embedding.android.FlutterActivity
 

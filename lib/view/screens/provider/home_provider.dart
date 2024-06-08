@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:sobol_task/view/screens/provider/home_state.dart';
+import 'package:custom_polygon/view/screens/provider/home_state.dart';
 import 'dart:math';
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>(
@@ -113,7 +113,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
       addOffset(offset);
     }
 
-    state = state.copyWith(dragTarget: index);
+    setDragTarget(index);
 
     List<Offset> changedList = List.from(state.coordinates);
     changedList[index] = offset;
@@ -128,14 +128,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
     if (state.closed) {
       return;
     }
+
     if (doAnyLineIntersect([...state.coordinates, offset])) {
       state = state.copyWith(
           previousActions: [],
           coordinates: List.from([...state.coordinates, offset]));
+      setDragTarget(state.coordinates.length - 1);
     }
-    state = state.copyWith(
-        dragTarget: state.coordinates.length - 1,
-        coordinates: List.from(state.coordinates));
   }
 
   void forwardAction() {
