@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:custom_polygon/config/assets.dart';
@@ -32,7 +29,8 @@ class HomePage extends ConsumerWidget {
               ref.read(homeProvider.notifier).addOffset(details.localPosition);
             },
             onPanUpdate: (details) {
-              if (homeState.closed || (homeState.coordinates.isEmpty)) {
+              if (homeState.closed ||
+                  (homeState.coordinates.isEmpty || homeState.isInDragMode)) {
                 return;
               }
 
@@ -40,8 +38,8 @@ class HomePage extends ConsumerWidget {
                   details.localPosition, homeState.coordinates.length - 1);
             },
             onPanEnd: (details) {
-              print(homeState.coordinates.last);
               ref.read(homeProvider.notifier).hideDragTarget();
+              ref.read(homeProvider.notifier).setInDragModeTrue();
             },
             child: Container(
               decoration: const BoxDecoration(
@@ -143,88 +141,3 @@ class HomePage extends ConsumerWidget {
     );
   }
 }
-
-// class CustomPanGestureRecognizer extends PanGestureRecognizer {
-//   @override
-//   void addAllowedPointer(PointerDownEvent event) {
-//     super.addAllowedPointer(event);
-//     resolve(GestureDisposition.accepted);
-//     //get the GestureRecognizer win immediately after invoking onPanDown
-//   }
-// }
-
-// RawGestureDetector CustomPanGestureDetector(
-//     {GestureDragDownCallback? onPanDown,
-//     GestureDragStartCallback? onPanStart,
-//     GestureDragUpdateCallback? onPanUpdate,
-//     GestureDragEndCallback? onPanEnd,
-//     GestureDragCancelCallback? onPanCancel,
-//     Widget? child}) {
-//   return RawGestureDetector(
-//     gestures: {
-//       CustomPanGestureRecognizer:
-//           GestureRecognizerFactoryWithHandlers<CustomPanGestureRecognizer>(
-//               () => CustomPanGestureRecognizer(), (detector) {
-//         detector
-//           ..onDown = onPanDown
-//           ..onStart = onPanStart
-//           ..onUpdate = onPanUpdate
-//           ..onEnd = onPanEnd
-//           ..onCancel = onPanCancel;
-//       })
-//     },
-//     child: child,
-//   );
-// }
-
-// class PanGestureDetector extends StatelessWidget {
-//   final Widget? child;
-//   final HitTestBehavior? behavior;
-//   final bool excludeFromSemantics;
-//   final SemanticsGestureDelegate? semantics;
-//   final double? touchSlop;
-//   final GestureDragCancelCallback? onPanCancel;
-//   final GestureDragDownCallback? onPanDown;
-//   final GestureDragEndCallback? onPanEnd;
-//   final GestureDragStartCallback? onPanStart;
-//   final GestureDragUpdateCallback? onPanUpdate;
-
-//   const PanGestureDetector({
-//     super.key,
-//     this.child,
-//     this.behavior,
-//     this.excludeFromSemantics = false,
-//     this.semantics,
-//     this.touchSlop,
-//     this.onPanCancel,
-//     this.onPanDown,
-//     this.onPanEnd,
-//     this.onPanStart,
-//     this.onPanUpdate,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return RawGestureDetector(
-//       behavior: behavior,
-//       excludeFromSemantics: excludeFromSemantics,
-//       semantics: semantics,
-//       gestures: {
-//         PanGestureRecognizer:
-//             GestureRecognizerFactoryWithHandlers<PanGestureRecognizer>(
-//           () => PanGestureRecognizer()
-//             ..gestureSettings = DeviceGestureSettings(touchSlop: touchSlop),
-//           (PanGestureRecognizer detector) {
-//             detector
-//               ..onDown = onPanDown
-//               ..onStart = onPanStart
-//               ..onUpdate = onPanUpdate
-//               ..onEnd = onPanEnd
-//               ..onCancel = onPanCancel;
-//           },
-//         )
-//       },
-//       child: child,
-//     );
-//   }
-// }

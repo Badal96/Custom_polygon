@@ -9,6 +9,7 @@ class HomeState with _$HomeState {
   const HomeState._();
 
   factory HomeState({
+    @Default(false) bool isInDragMode,
     @Default(null) int? dragTarget,
     @Default([]) List<Offset> previousActions,
     @Default(false) bool closed,

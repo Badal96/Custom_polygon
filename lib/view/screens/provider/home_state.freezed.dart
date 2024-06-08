@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeState {
+  bool get isInDragMode => throw _privateConstructorUsedError;
   int? get dragTarget => throw _privateConstructorUsedError;
   List<Offset> get previousActions => throw _privateConstructorUsedError;
   bool get closed => throw _privateConstructorUsedError;
@@ -32,7 +33,8 @@ abstract class $HomeStateCopyWith<$Res> {
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call(
-      {int? dragTarget,
+      {bool isInDragMode,
+      int? dragTarget,
       List<Offset> previousActions,
       bool closed,
       List<Offset> coordinates});
@@ -51,12 +53,17 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isInDragMode = null,
     Object? dragTarget = freezed,
     Object? previousActions = null,
     Object? closed = null,
     Object? coordinates = null,
   }) {
     return _then(_value.copyWith(
+      isInDragMode: null == isInDragMode
+          ? _value.isInDragMode
+          : isInDragMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       dragTarget: freezed == dragTarget
           ? _value.dragTarget
           : dragTarget // ignore: cast_nullable_to_non_nullable
@@ -86,7 +93,8 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int? dragTarget,
+      {bool isInDragMode,
+      int? dragTarget,
       List<Offset> previousActions,
       bool closed,
       List<Offset> coordinates});
@@ -103,12 +111,17 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? isInDragMode = null,
     Object? dragTarget = freezed,
     Object? previousActions = null,
     Object? closed = null,
     Object? coordinates = null,
   }) {
     return _then(_$HomeStateImpl(
+      isInDragMode: null == isInDragMode
+          ? _value.isInDragMode
+          : isInDragMode // ignore: cast_nullable_to_non_nullable
+              as bool,
       dragTarget: freezed == dragTarget
           ? _value.dragTarget
           : dragTarget // ignore: cast_nullable_to_non_nullable
@@ -133,7 +146,8 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl extends _HomeState {
   _$HomeStateImpl(
-      {this.dragTarget = null,
+      {this.isInDragMode = false,
+      this.dragTarget = null,
       final List<Offset> previousActions = const [],
       this.closed = false,
       final List<Offset> coordinates = const []})
@@ -141,6 +155,9 @@ class _$HomeStateImpl extends _HomeState {
         _coordinates = coordinates,
         super._();
 
+  @override
+  @JsonKey()
+  final bool isInDragMode;
   @override
   @JsonKey()
   final int? dragTarget;
@@ -167,7 +184,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(dragTarget: $dragTarget, previousActions: $previousActions, closed: $closed, coordinates: $coordinates)';
+    return 'HomeState(isInDragMode: $isInDragMode, dragTarget: $dragTarget, previousActions: $previousActions, closed: $closed, coordinates: $coordinates)';
   }
 
   @override
@@ -175,6 +192,8 @@ class _$HomeStateImpl extends _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
+            (identical(other.isInDragMode, isInDragMode) ||
+                other.isInDragMode == isInDragMode) &&
             (identical(other.dragTarget, dragTarget) ||
                 other.dragTarget == dragTarget) &&
             const DeepCollectionEquality()
@@ -187,6 +206,7 @@ class _$HomeStateImpl extends _HomeState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      isInDragMode,
       dragTarget,
       const DeepCollectionEquality().hash(_previousActions),
       closed,
@@ -201,12 +221,15 @@ class _$HomeStateImpl extends _HomeState {
 
 abstract class _HomeState extends HomeState {
   factory _HomeState(
-      {final int? dragTarget,
+      {final bool isInDragMode,
+      final int? dragTarget,
       final List<Offset> previousActions,
       final bool closed,
       final List<Offset> coordinates}) = _$HomeStateImpl;
   _HomeState._() : super._();
 
+  @override
+  bool get isInDragMode;
   @override
   int? get dragTarget;
   @override

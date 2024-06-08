@@ -101,9 +101,11 @@ class HomeNotifier extends StateNotifier<HomeState> {
   void toggleConnectRect() {
     if (state.closed == false) {
       if (state.coordinates.length > 2) {
+        setInDragModeTrue();
         state = state.copyWith(closed: true);
       }
     } else {
+      setInDragModeFalse();
       state = state.copyWith(closed: false);
     }
   }
@@ -130,6 +132,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
     }
 
     if (doAnyLineIntersect([...state.coordinates, offset])) {
+      setInDragModeFalse();
       state = state.copyWith(
           previousActions: [],
           coordinates: List.from([...state.coordinates, offset]));
@@ -158,5 +161,13 @@ class HomeNotifier extends StateNotifier<HomeState> {
       coordinates: changedList,
       previousActions: [...state.previousActions, state.coordinates.last],
     );
+  }
+
+  void setInDragModeTrue() {
+    state = state.copyWith(isInDragMode: true);
+  }
+
+  void setInDragModeFalse() {
+    state = state.copyWith(isInDragMode: false);
   }
 }
